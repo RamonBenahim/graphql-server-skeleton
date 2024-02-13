@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/RamonBenahim/graphql-server-skeleton/graph/generated"
 	"github.com/RamonBenahim/graphql-server-skeleton/graph/model"
 )
 
@@ -18,9 +19,9 @@ func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCa
 		return nil, err
 	}
 	return &model.Category{
-		ID: category.ID,
-		Name: category.Name,
-		Description: category.Description,
+		ID:          category.ID,
+		Name:        category.Name,
+		Description: &category.Description,
 	}, nil
 }
 
@@ -39,11 +40,11 @@ func (r *queryResolver) Courses(ctx context.Context) ([]*model.Course, error) {
 	panic(fmt.Errorf("not implemented: Courses - courses"))
 }
 
-// Mutation returns MutationResolver implementation.
-func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
+// Mutation returns generated.MutationResolver implementation.
+func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
-// Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+// Query returns generated.QueryResolver implementation.
+func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
